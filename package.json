@@ -1,12 +1,21 @@
 {
-  "name": "excelToTable",
-  "version": "1.0.0",
+  "name": "element-ui-excel2table",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CJIsabella/element-ui-excel2Table.git"
+  },
+  "keywords": [
+    "element-ui-excel2table",
+    "elemnt-ui",
+    "excel2table",
+    "table"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {

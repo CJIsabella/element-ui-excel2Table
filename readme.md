@@ -4,7 +4,7 @@
 
 ## 2、安装
 
-npm i element-ui-excel2Table
+npm i element-ui-excel2table
 
 ## 3、使用
 

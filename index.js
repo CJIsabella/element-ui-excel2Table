@@ -2,9 +2,8 @@ const XLSX = require('xlsx')
 const FileSaver = require('file-saver')
 
 module.exports = {
-  // excel的导入
-  onChangeFile(file) {
-    const cj = { name: '姓名', age: '年龄', workAge: '工作年限' }
+  // excel的导入,object = { name: '姓名', age: '年龄', workAge: '工作年限' },object对象的value必须和excel表格的表头名称相同，否则会报错，key值可以自己命名
+  excelToTable(file, object) {
     // console.log(file)
     // console.log('file', file, file.raw.constructor)
     if (!file) {
@@ -25,26 +24,28 @@ module.exports = {
       })
       const exlname = workbook.SheetNames[0] // 取第一张表
       const exl = XLSX.utils.sheet_to_json(workbook.Sheets[exlname]) // 生成json表格内容
-      console.log('json---------', exl)
+      // console.log('json---------', exl)
+      // 将exl对象{'姓名':'Isabella'}的中文key转换成自己传过来的object的key
       exl.map(v => {
         const obj = {}
-        for (var item in cj) {
+        for (var item in object) {
           obj[item] = v[cj[item]]
         }
         arr.push(obj)
       })
     }
     fileReader.readAsBinaryString(file.raw)
-    console.log(arr, '---arr')
+    return arr
+    // console.log(arr, '---arr')
   },
 
 
   // excel的导出
-  output() {
+  tableToExcel(selector, excelName) {
     // 转换成excel时，使用原始的格式
     var xlsxParam = { raw: true }
     var wb = XLSX.utils.table_to_book(
-      document.querySelector('#mytable'),
+      document.querySelector(selector),
       xlsxParam
     )
     var wbout = XLSX.write(wb, {
@@ -56,7 +57,7 @@ module.exports = {
       FileSaver.saveAs(
         // charset=utf-8 以文本格式保存才会和原表格数据一样显示
         new Blob([wbout], { type: 'application/octet-stream;charset=utf-8' }),
-        'monitorGQI.xlsx'
+        excelName
       )
     } catch (e) {
       if (typeof console !== 'undefined') console.log(e, wbout)
